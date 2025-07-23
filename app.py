@@ -4,19 +4,15 @@ import sys
 import boto3
 import streamlit as st
 
-## We will be suing Titan Embeddings Model To generate Embedding
-
 from langchain_community.embeddings import BedrockEmbeddings
 from langchain.llms.bedrock import Bedrock
 
 ## Data Ingestion
-
 import numpy as np
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFDirectoryLoader
 
 # Vector Embedding And Vector Store
-
 from langchain.vectorstores import FAISS
 
 ## LLm Models
@@ -41,7 +37,6 @@ def data_ingestion():
     return docs
 
 ## Vector Embedding and vector store
-
 def get_vector_store(docs):
     vectorstore_faiss=FAISS.from_documents(
         docs,
@@ -64,7 +59,6 @@ def get_llama2_llm():
     return llm
 
 prompt_template = """
-
 Human: Use the following pieces of context to provide a 
 concise answer to the question at the end but usse atleast summarize with 
 250 words with detailed explaantions. If you don't know the answer, 
@@ -131,17 +125,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
