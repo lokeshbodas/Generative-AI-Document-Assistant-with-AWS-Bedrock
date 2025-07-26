@@ -14,7 +14,9 @@ payload={
     "topP":0.8
 }
 body = json.dumps(payload)
+
 model_id = "ai21.j2-mid-v1"
+
 response = bedrock.invoke_model(
     body=body,
     modelId=model_id,
