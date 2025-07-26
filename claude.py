@@ -13,6 +13,7 @@ payload={
     "temperature":0.8,
     "topP":0.8
 }
+
 body = json.dumps(payload)
 
 model_id = "ai21.j2-mid-v1"
