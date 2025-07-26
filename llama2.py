@@ -14,7 +14,9 @@ payload={
     "top_p":0.9
 }
 body=json.dumps(payload)
+
 model_id="meta.llama2-70b-chat-v1"
+
 response=bedrock.invoke_model(
     body=body,
     modelId=model_id,
