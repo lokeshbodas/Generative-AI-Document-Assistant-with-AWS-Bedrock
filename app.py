@@ -60,7 +60,7 @@ def get_llama2_llm():
 
 prompt_template = """
 Human: Use the following pieces of context to provide a 
-concise answer to the question at the end but usse atleast summarize with 
+concise answer to the question at the end but use atleast summarize with 
 250 words with detailed explaantions. If you don't know the answer, 
 just say that you don't know, don't try to make up an answer.
 <context>
