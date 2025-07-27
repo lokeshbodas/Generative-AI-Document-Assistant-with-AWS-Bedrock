@@ -56,7 +56,7 @@ def get_claude_llm():
     
     return llm
 
-def get_llama2_llm():
+def get_llama3_llm():
     ##create the Anthropic Model
     llm=Bedrock(model_id="meta.llama3-70b-instruct-v1:0",client=bedrock,
                 model_kwargs={'max_gen_len':512})
