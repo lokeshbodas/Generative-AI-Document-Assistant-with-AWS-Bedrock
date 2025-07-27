@@ -4,15 +4,19 @@ import sys
 import boto3
 import streamlit as st
 
+## We will be suing Titan Embeddings Model To generate Embedding
+
 from langchain_community.embeddings import BedrockEmbeddings
 from langchain.llms.bedrock import Bedrock
 
 ## Data Ingestion
+
 import numpy as np
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PyPDFDirectoryLoader
 
 # Vector Embedding And Vector Store
+
 from langchain.vectorstores import FAISS
 
 ## LLm Models
@@ -20,7 +24,7 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 
 ## Bedrock Clients
-bedrock=boto3.client(service_name="bedrock-runtime")
+bedrock=boto3.client(service_name="bedrock-runtime", region_name="us-east-1")
 bedrock_embeddings=BedrockEmbeddings(model_id="amazon.titan-embed-text-v1",client=bedrock)
 
 
@@ -37,6 +41,7 @@ def data_ingestion():
     return docs
 
 ## Vector Embedding and vector store
+
 def get_vector_store(docs):
     vectorstore_faiss=FAISS.from_documents(
         docs,
@@ -59,8 +64,9 @@ def get_llama2_llm():
     return llm
 
 prompt_template = """
+
 Human: Use the following pieces of context to provide a 
-concise answer to the question at the end but use atleast summarize with 
+concise answer to the question at the end but usse atleast summarize with 
 250 words with detailed explaantions. If you don't know the answer, 
 just say that you don't know, don't try to make up an answer.
 <context>
@@ -76,6 +82,9 @@ PROMPT = PromptTemplate(
 )
 
 def get_response_llm(llm,vectorstore_faiss,query):
+    if not query.strip():
+        return "Please enter a valid question."
+
     qa = RetrievalQA.from_chain_type(
     llm=llm,
     chain_type="stuff",
@@ -116,7 +125,7 @@ def main():
 
     if st.button("Llama2 Output"):
         with st.spinner("Processing..."):
-            faiss_index = FAISS.load_local("faiss_index", bedrock_embeddings)
+            faiss_index = FAISS.load_local("faiss_index", bedrock_embeddings, allow_dangerous_deserialization=True)
             llm=get_llama2_llm()
             
             #faiss_index = get_vector_store(docs)
